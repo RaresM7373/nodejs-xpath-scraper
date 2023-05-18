@@ -1,11 +1,14 @@
 import express from 'express';
-import puppeteer from 'puppeteer';
+
+import scrape from './controllers/scrape.js';
+import bodyParser from 'body-parser';
 
 const app = express();
+const PORT = process.env.PORT || 4000;
 
-const bw = await puppeteer.launch();
-console.log('Browser, ', bw);
+app.use(bodyParser.json());
+app.use('/scrape', scrape);
 
-app.listen(4000, () => {
-  console.log('App started');
+app.listen(PORT, () => {
+  console.log(`App started listening on ${PORT}`);
 });
