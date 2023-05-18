@@ -3,8 +3,8 @@
     // This was actually kind of a nightmare to figure out.
     // There is a LOT of outdated, incorrect advise out there.
     // there is/was an ESM vs CommonJS war that's made a huge mess, this seems to get us through it.
-    "target": "esnext",  // DO NOT CHANGE!
-    "module": "esnext",  // DO NOT CHANGE!
+    "target": "esnext", // DO NOT CHANGE!
+    "module": "esnext", // DO NOT CHANGE!
     "moduleResolution": "node",
     "allowJs": true,
     "esModuleInterop": true,
@@ -24,22 +24,10 @@
     "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
     "importHelpers": true,
     "skipLibCheck": true,
-    "outDir": "./dist/tsc/",
-    "types": [
-      "node",
-      "jest"
-    ],
-    "lib": [
-      "ES6",
-      "DOM"
-    ]
+    "outDir": "./dist",
+    "types": ["node", "jest"],
+    "lib": ["ES6", "DOM"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-  ],
-  "exclude": [
-    "node_modules",
-    ".vscode"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", ".vscode"]
 }

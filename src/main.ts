@@ -1,11 +1,11 @@
- import * as ora from "ora";
+import express from 'express';
+import puppeteer from 'puppeteer';
 
-export const delayMillis = (delayMs: number): Promise<void> => new Promise(resolve => setTimeout(resolve, delayMs));
+const app = express();
 
-export const greet = (name: string): string => `Hello ${name}`
+const bw = await puppeteer.launch();
+console.log('Browser, ', bw);
 
-export const foo = async (): Promise<boolean> => {
-  console.log(greet('World'))
-  await ora.oraPromise( delayMillis(1000) )
-  return true
-}
+app.listen(4000, () => {
+  console.log('App started');
+});
