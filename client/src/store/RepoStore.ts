@@ -9,8 +9,23 @@ export class RepoStore {
     makeAutoObservable(this, undefined, { autoBind: true });
   }
 
+  setRepos(data: Repo[]) {
+    this.repos = [...data];
+  }
+
   async getRepos() {
     const response = await repoApi.getAll();
-    this.repos = response.data;
+    this.setRepos(response.data.repos);
+  }
+
+  async createRepo(data: Repo) {
+    const response = await repoApi.create(data);
+    this.setRepos([...this.repos, data]);
+    return response;
+  }
+
+  async deleteRepo(name: string) {
+    const response = await repoApi.deleteByName(name);
+    console.log('response', response);
   }
 }

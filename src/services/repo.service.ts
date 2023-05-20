@@ -56,8 +56,20 @@ const create = (repo: Repo) => {
   return writeData(data);
 };
 
+const deleteByName = (name: string) => {
+  const data = readData();
+  const index = data.repos.findIndex(
+    (repo: Repo) =>
+      repo.title!.trim().toLowerCase() === name.trim().toLowerCase()
+  );
+
+  data.repos.splice(index, 1);
+  return writeData(data);
+};
+
 export default {
   batchCreate,
   create,
   fetch,
+  deleteByName,
 };

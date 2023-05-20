@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 
 export class ApiService<T> {
   url: string;
-  private api: AxiosInstance;
+  api: AxiosInstance;
 
   constructor(url: string) {
     this.url = url;

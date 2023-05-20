@@ -15,4 +15,10 @@ router.get('/', async (_req, res) => {
   res.send(repos);
 });
 
+router.delete('/:name', async (req, res) => {
+  const { name } = req.params;
+  const result = await repoService.deleteByName(name);
+  res.send(result);
+});
+
 export default router;

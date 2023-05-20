@@ -2,19 +2,20 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
 } from '@chakra-ui/react';
 import { useStore } from '../hooks/useStore';
 import { useEffect } from 'react';
+import { Repo } from '../constants/types';
+import { toJS } from 'mobx';
+import { observer } from 'mobx-react';
 
-export const ScrapeTable = () => {
+const ScrapeTable = () => {
   const {
-    repoStore: { getRepos },
+    repoStore: { getRepos, repos },
   } = useStore();
 
   useEffect(() => {
@@ -22,41 +23,27 @@ export const ScrapeTable = () => {
   }, [getRepos]);
 
   return (
-    <TableContainer w={1200}>
+    <TableContainer w={1200} mb={16}>
       <Table variant="simple">
-        <TableCaption>Imperial to metric conversion factors</TableCaption>
         <Thead>
           <Tr>
-            <Th>To convert</Th>
-            <Th>into</Th>
-            <Th isNumeric>multiply by</Th>
+            <Th>Title</Th>
+            <Th>Technology</Th>
+            <Th isNumeric>Last Updated</Th>
           </Tr>
         </Thead>
         <Tbody>
-          <Tr>
-            <Td>inches</Td>
-            <Td>millimetres (mm)</Td>
-            <Td isNumeric>25.4</Td>
-          </Tr>
-          <Tr>
-            <Td>feet</Td>
-            <Td>centimetres (cm)</Td>
-            <Td isNumeric>30.48</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td isNumeric>0.91444</Td>
-          </Tr>
+          {toJS(repos).map((repo: Repo) => (
+            <Tr key={repo.title}>
+              <Td>{repo.title}</Td>
+              <Td>{repo.technology}</Td>
+              <Td isNumeric>{repo.lastUpdated}</Td>
+            </Tr>
+          ))}
         </Tbody>
-        <Tfoot>
-          <Tr>
-            <Th>To convert</Th>
-            <Th>into</Th>
-            <Th isNumeric>multiply by</Th>
-          </Tr>
-        </Tfoot>
       </Table>
     </TableContainer>
   );
 };
+
+export default observer(ScrapeTable);
