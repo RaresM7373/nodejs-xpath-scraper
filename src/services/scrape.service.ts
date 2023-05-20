@@ -3,29 +3,30 @@ import * as puppeteer from 'puppeteer';
 const scrapeWebPage = async (
   url: string,
   paths: [string, string]
-): Promise<[(string | null)[], (string | null)[]]> => {
+): Promise<(string | null)[][]> => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url);
 
-  const primaryElements = await page.$x(paths[0]);
-  const secondaryElements = await page.$x(paths[1]);
+  const textValues = await new Promise((resolve) => {
+    const result: (string | null)[][] = [];
+    paths.forEach(async (path, i) => {
+      const pathElements = await page.$x(path);
 
-  const primaryValues = await Promise.all(
-    primaryElements.map(async (element) => {
-      const textValue = await element.evaluate((node) => node.textContent);
-      return textValue;
-    })
-  );
+      const values = await Promise.all(
+        pathElements.map(async (element) => {
+          const textValue = await element.evaluate((node) => node.textContent);
+          return textValue;
+        })
+      );
 
-  const secondaryValues = await Promise.all(
-    secondaryElements.map(async (element) => {
-      const textValue = await element.evaluate((node) => node.textContent);
-      return textValue;
-    })
-  );
+      result.push(values);
 
-  return [primaryValues, secondaryValues];
+      if (i === paths.length - 1) resolve(result);
+    });
+  });
+
+  return textValues as string[][];
 };
 
 export default {

@@ -6,11 +6,11 @@ export class RepoStore {
   repos: Repo[] = [];
 
   constructor() {
-    makeAutoObservable(this);
+    makeAutoObservable(this, undefined, { autoBind: true });
   }
 
   async getRepos() {
     const response = await repoApi.getAll();
-    console.log('Response is ', response);
+    this.repos = response.data;
   }
 }

@@ -8,15 +8,19 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   const { url, paths } = req.body;
-  const [titles, technologies] = await scrapeService.scrapeWebPage(url, paths);
+  const [titles, technologies, updates] = await scrapeService.scrapeWebPage(
+    url,
+    paths
+  );
 
   const repos: Repo[] = [];
   for (let i = 0; i < titles.length; i++) {
-    repos.push({ title: titles[i], technology: technologies[i] });
+    repos.push({
+      title: titles[i]!.trim(),
+      technology: technologies[i],
+      lastUpdated: updates[i],
+    });
   }
-
-  console.log('Titles', titles);
-  console.log('Tech', technologies);
 
   const data = await repoService.batchCreate(repos);
   res.send(data);

@@ -9,8 +9,18 @@ import {
   TableCaption,
   TableContainer,
 } from '@chakra-ui/react';
+import { useStore } from '../hooks/useStore';
+import { useEffect } from 'react';
 
 export const ScrapeTable = () => {
+  const {
+    repoStore: { getRepos },
+  } = useStore();
+
+  useEffect(() => {
+    getRepos();
+  }, [getRepos]);
+
   return (
     <TableContainer w={1200}>
       <Table variant="simple">
