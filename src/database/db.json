@@ -1,1 +1,3 @@
-{"repos":[{"title":"X6","technology":"TypeScript"},{"title":"docker-php-setup","technology":"Dockerfile"},{"title":"php-jwt-auth"},{"title":"express-dummy"},{"title":"dotnet-auth"},{"title":"webpack-demo-app"}]}
+{
+  "repos": []
+}
